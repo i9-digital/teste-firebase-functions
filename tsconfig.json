@@ -32,6 +32,6 @@
       "./node_modules/@types"
     ],
   },
-  "include": ["src/*/", "src/*/.json", "src/.ts"],
+  "include": ["src/*/", "src/*/.json", "src/.ts", "src/router/tests", "tests/automated/automated-testing.spec.ts"],
   "exclude": ["node_modules", "dist", "test", "**/*spec.ts"]
 }
