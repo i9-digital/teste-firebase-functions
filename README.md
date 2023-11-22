@@ -1,4 +1,4 @@
-# API REST NODE, TYPESCRIPT, E FIREBASE
+# API REST NODEJS, TYPESCRIPT, E FIREBASE
 
 API de cadastro de usuários com Firebase, Node.js e Typescript.
 
@@ -26,7 +26,7 @@ Antes de executar a aplicação, você deve ter as seguintes ferramentas instala
 Crie um arquivo na raiz do projeto com o nome `.env`,
 Esta aplicação contém as seguintes variáveis de ambiente:
 
-`# APP`
+`# .env`
 - `NODE_ENV`
 - `LOGGER_LEVEL`
 - `LOGSTASH_ENABLED`
@@ -61,6 +61,12 @@ npm run build
 npm run start:prod
 ```
 
+Para executar os testes Unitários e Automatizados:
+
+```bash
+npm run test:cov
+```
+
 ### Exemplos de uso
 A API suporta a seguinte operação:
 
@@ -83,5 +89,4 @@ A API suporta a seguinte operação:
 - Typescript
 - Express
 - Firebase
-- Dotenv
 - Solid
