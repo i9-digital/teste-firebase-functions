@@ -45,7 +45,10 @@ npm run start:dev
 
 ### Deploy
 
+To deploy your application to Firebase, run the following command:
+
 ```bash
+firebase login
 npm run deploy
 ```
 

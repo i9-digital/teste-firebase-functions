@@ -4,10 +4,10 @@ import { onRequest } from 'firebase-functions/v2/https'
 import { z } from 'zod'
 
 const createUserSchema = z.object({
-    name: z.string(),
-});
+	name: z.string(),
+})
 
-type CreateUser = z.infer<typeof createUserSchema>;
+type CreateUser = z.infer<typeof createUserSchema>
 
 admin.initializeApp()
 
@@ -16,7 +16,7 @@ export const createUser = onRequest(async (request, response) => {
 		response.status(400).send('Método de request precisa ser POST')
 	}
 
-  const body: CreateUser = createUserSchema.parse(request.body)
+	const body: CreateUser = createUserSchema.parse(request.body)
 
 	const data = {
 		increment_id: 0,
