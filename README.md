@@ -39,8 +39,17 @@ And uses the KISS principle (Keep it Simple, Stupid)
 First, run the development server:
 
 ```bash
+cd functions
 npm install
 npm run start:dev
+```
+
+Open [http://127.0.0.1:4000/ ](http://127.0.0.1:4000/ ) with your browser to see the result.
+
+Post a request to the following endpoint to create a new user:
+
+```bash
+curl -X POST 'http://127.0.0.1:5001/recrutamento-felipe/us-central1/createUser' -H "Content-Type: application/json" -d '{"name": "John Doe"}'
 ```
 
 ### Deploy
