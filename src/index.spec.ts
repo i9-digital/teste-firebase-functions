@@ -19,12 +19,14 @@ describe('/create', () => {
   });
 
   it('creates a product successfully', async () => {
-    const addSpy = jest.fn();
-    const collectionSpy = jest.spyOn(Firestore.prototype, 'collection').mockReturnValue({ add: addSpy } as any);
+    const setSpy = jest.fn();
+    const docSpy = jest.fn(() => ({ set: setSpy }));
+    const collectionSpy = jest.spyOn(Firestore.prototype, 'collection').mockReturnValue({ doc: docSpy } as any);
     await sut.create({ ...req, body: { name: 'test' } }, res);
     expect(res.json).toHaveBeenCalledWith({ incrementedId: null, name: 'test' });
     expect(collectionSpy).toHaveBeenCalledWith('product');
-    expect(addSpy).toHaveBeenCalledWith({ incrementedId: null, name: 'test' });
+    expect(docSpy).toHaveBeenCalledWith(expect.any(String));
+    expect(setSpy).toHaveBeenCalledWith({ incrementedId: null, name: 'test' });
   });
 });
 
@@ -32,8 +34,9 @@ describe('/update', () => {
   it('updates product.incrementedId successfully', async () => {
     const setSpy = jest.fn();
     jest.spyOn(Firestore.prototype, 'collection').mockReturnValue({
+      doc: jest.fn().mockReturnValue({ set: setSpy }),
       orderBy: jest.fn().mockReturnValue({
-        limit: jest.fn().mockReturnValue({ get: jest.fn().mockResolvedValue({ empty: true }) }),
+        limit: jest.fn().mockReturnValue({ get: jest.fn().mockResolvedValue({ empty: true, docs: [] }) }),
       }),
     } as any);
     const { wrap } = fft();
