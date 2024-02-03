@@ -12,6 +12,7 @@ module.exports = {
     'plugin:import/typescript',
     'google',
     'plugin:@typescript-eslint/recommended',
+    'prettier',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -21,17 +22,15 @@ module.exports = {
   ignorePatterns: [
     '/lib/**/*', // Ignore built files.
     'jest.config.js',
+    '/coverage/**/*',
   ],
-  plugins: [
-    '@typescript-eslint',
-    'import',
-  ],
+  plugins: ['@typescript-eslint', 'import'],
   rules: {
-    'quotes': ['error', 'single'],
+    quotes: ['error', 'single'],
     'import/no-unresolved': 0,
-    'indent': ['error', 2],
+    indent: ['error', 2],
     'require-jsdoc': 0,
     'object-curly-spacing': ['error', 'always'],
-    'max-len': ['error', { 'code': 120 }],
+    'max-len': ['error', { code: 120 }],
   },
 };

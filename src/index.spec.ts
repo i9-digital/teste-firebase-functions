@@ -5,9 +5,7 @@ const req = { method: 'POST', body: {} } as any;
 const res = { status: jest.fn(() => res), json: jest.fn() } as any;
 
 describe('/create', () => {
-  it.each(
-    ['GET', 'PUT', 'PATCH', 'DELETE']
-  )('returns 405 if request method is %s', async (method) => {
+  it.each(['GET', 'PUT', 'PATCH', 'DELETE'])('returns 405 if request method is %s', async (method) => {
     await sut.create({ ...req, method }, res);
     expect(res.status).toHaveBeenCalledWith(405);
     expect(res.json).toHaveBeenCalledWith({ error: 'method not allowed' });
@@ -28,4 +26,3 @@ describe('/create', () => {
     expect(addSpy).toHaveBeenCalledWith({ incrementedId: null, name: 'test' });
   });
 });
-
