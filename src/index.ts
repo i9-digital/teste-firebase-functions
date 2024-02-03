@@ -25,7 +25,7 @@ export const create = onRequest(async (request, response) => {
     return;
   }
   const productDto = await createProductUsecase.execute({ name: request.body.name });
-  response.json(productDto);
+  response.status(201).json(productDto);
 });
 
 export const update = firestore.document('product/{productId}').onCreate(async (snapshot) => {

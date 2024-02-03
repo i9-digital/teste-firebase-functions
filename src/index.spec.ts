@@ -23,6 +23,7 @@ describe('/create', () => {
     const docSpy = jest.fn(() => ({ set: setSpy }));
     const collectionSpy = jest.spyOn(Firestore.prototype, 'collection').mockReturnValue({ doc: docSpy } as any);
     await sut.create({ ...req, body: { name: 'test' } }, res);
+    expect(res.status).toHaveBeenCalledWith(201);
     expect(res.json).toHaveBeenCalledWith({ incrementedId: null, name: 'test' });
     expect(collectionSpy).toHaveBeenCalledWith('product');
     expect(docSpy).toHaveBeenCalledWith(expect.any(String));
