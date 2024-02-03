@@ -1,4 +1,5 @@
 import { Firestore } from 'firebase-admin/firestore';
+import fft from 'firebase-functions-test';
 import * as sut from './index';
 
 const req = { method: 'POST', body: {} } as any;
@@ -24,5 +25,19 @@ describe('/create', () => {
     expect(res.json).toHaveBeenCalledWith({ incrementedId: null, name: 'test' });
     expect(collectionSpy).toHaveBeenCalledWith('product');
     expect(addSpy).toHaveBeenCalledWith({ incrementedId: null, name: 'test' });
+  });
+});
+
+describe('/update', () => {
+  it('updates product.incrementedId successfully', async () => {
+    const setSpy = jest.fn();
+    jest.spyOn(Firestore.prototype, 'collection').mockReturnValue({
+      orderBy: jest.fn().mockReturnValue({
+        limit: jest.fn().mockReturnValue({ get: jest.fn().mockResolvedValue({ empty: true }) }),
+      }),
+    } as any);
+    const { wrap } = fft();
+    await wrap(sut.update)({ data: () => ({ name: 'test' }), ref: { set: setSpy } } as any);
+    expect(setSpy).toHaveBeenCalledWith({ incrementedId: 1, name: 'test' }, { merge: true });
   });
 });
