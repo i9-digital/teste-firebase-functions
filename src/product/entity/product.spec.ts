@@ -20,6 +20,12 @@ describe('Product', () => {
     }).toThrow();
   });
 
+  it('throws an error if name is empty', () => {
+    expect(() => {
+      new Product(id, '');
+    }).toThrow('"product.name" is required');
+  });
+
   it('defines an incrementedId', () => {
     const product = new Product(id, 'valid product name');
     product.updateIncrementedId(1);

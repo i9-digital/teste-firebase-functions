@@ -11,6 +11,7 @@ export class Product {
     this._id = id;
     this._incrementedId = null;
     this._name = name;
+    this.validate();
   }
 
   get id(): Id {
@@ -27,5 +28,9 @@ export class Product {
 
   updateIncrementedId(id: number): void {
     this._incrementedId = id;
+  }
+
+  private validate(): void {
+    if (!this._name) throw new Error('"product.name" is required');
   }
 }

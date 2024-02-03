@@ -5,6 +5,7 @@ import { getFirestore } from 'firebase-admin/firestore';
 import { Product } from './product/entity/product';
 import { FirestoreProductRepository } from './product/repository/firestore-product-repository';
 import { UniqueId } from './@shared/value-object/unique-id';
+import { CreateProductUsecase } from './product/usecase/create-product-usecase';
 
 initializeApp({
   credential: applicationDefault(),
@@ -12,6 +13,7 @@ initializeApp({
 
 const db = getFirestore();
 const productRepository = new FirestoreProductRepository(db);
+const createProductUsecase = new CreateProductUsecase(productRepository);
 
 async function getNextIncrementedId(): Promise<number> {
   const products = await productRepository.list({ limit: 1, orderBy: { field: 'incrementedId', direction: 'desc' } });
@@ -30,12 +32,8 @@ export const create = onRequest(async (request, response) => {
     response.status(400).json({ error: '"name" is required' });
     return;
   }
-  const product = new Product(new UniqueId(), request.body.name);
-  await productRepository.create(product);
-  response.json({
-    incrementedId: product.incrementedId,
-    name: product.name,
-  });
+  const productDto = await createProductUsecase.execute({ name: request.body.name });
+  response.json(productDto);
 });
 
 export const update = firestore.document('product/{productId}').onCreate(async (snapshot) => {
